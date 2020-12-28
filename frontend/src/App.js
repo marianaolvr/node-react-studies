@@ -15,11 +15,21 @@ export default function App() {
     })
   }, [])
 
-  function handleAddProject() {
+  async function handleAddProject() {
+    //adicionando novo projeto sem usar o useState do React, apenas com o push puro do JS (compromete o conceito de imutabilidade)
     // projects.push(`Novo Projeto ${Date.now()}`);
-    setProjects([...projects, `Novo Projeto ${Date.now()}`]);
+
+    //adicionando novo projeto sem api - somente no front
+    // setProjects([...projects, `Novo Projeto ${Date.now()}`]);
     
-    console.log(projects);
+    const response = await api.post('/projects', {
+      title: `Novo Projeto ${Date.now()}`,
+      owner: "Mari"
+    });
+
+    const project = response.data;
+
+    setProjects([...projects, project]);
   }
 
   return (
