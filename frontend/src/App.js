@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import api from './services/api';
 
 import './App.css';
 import backgroundImage from './assets/background.jpeg'
@@ -6,7 +7,13 @@ import backgroundImage from './assets/background.jpeg'
 import Header from "./components/Header";
 
 export default function App() {
-  const [projects, setProjects] = useState(["Projeto 1", "Projeto 2", "Projeto 3", "Projeto 4"]);
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    api.get('/projects').then(response => {
+      setProjects(response.data)
+    })
+  }, [])
 
   function handleAddProject() {
     // projects.push(`Novo Projeto ${Date.now()}`);
@@ -23,7 +30,11 @@ export default function App() {
 
       <ul>
         {projects.map((project) => (
-          <li key={project}>{project}</li>
+          <>
+            <li key={project.id}><b>{project.title}</b></li>
+            <p>{project.owner}</p>
+            <br />
+          </>
         ))}
       </ul>
 
