@@ -2,8 +2,13 @@ const express = require('express');
 const { uuid, isUuid } = require('uuidv4');
 //id unico universal
 
+const cors = require('cors')
+
 const app = express();
 
+app.use(cors());
+// assim, sem configuração, vai permitir que qualquer front tenha acesso ao back. Opção ok para ambiente de desenvolvimento
+// é possível determinar a origem/endereço do nosso frontend que vai ter acesso às infos do backend
 app.use(express.json());
 
 
